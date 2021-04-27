@@ -4,7 +4,7 @@ window.APP = {
   circleNumber: 5,
   squareLength: 100.0,
   zoomFactor: 1,
-  circleRadius: 33.0,
+  circleRadius: 50.0,
   circles: [],
   stage: null,
 
@@ -30,14 +30,14 @@ window.APP = {
     $("#circleNumber").text(APP.circleNumber);
     $("#circleNumberRange").val(APP.circleNumber);
 
-    $("#circleRadius").text(APP.circleRadius);
+    $("#circleRadius").text(APP.circleRadius/500);
     $("#circleRadiusRange").val(APP.circleRadius);
   },
 
   initEvent: function () {
     $("#circleNumberRange").change(function () {
       console.log("self.circleNumber", APP.circleNumber);
-      APP.circleNumber = $(this).val();
+      APP.circleNumber = parseInt($(this).val());
       $("#circleNumber").text(APP.circleNumber);
 
       APP.updateCanvas();
@@ -46,8 +46,8 @@ window.APP = {
 
     $("#circleRadiusRange").change(function () {
       console.log("self.circleRadius", APP.circleRadius);
-      APP.circleRadius = $(this).val();
-      $("#circleRadius").text(APP.circleRadius);
+      APP.circleRadius = parseFloat($(this).val());
+      $("#circleRadius").text(APP.circleRadius/500);
       APP.updateCircle();
     });
 
@@ -128,8 +128,9 @@ window.APP = {
   },
 
   dragCircle: function (evt) {
-    evt.target.x = evt.stageX;
-    evt.target.y = evt.stageY;
+    console.log(evt)
+    evt.target.x += evt.nativeEvent.movementX;
+    evt.target.y += evt.nativeEvent.movementY;
     APP.updateCircle();
   },
   updateCanvas: function () {
